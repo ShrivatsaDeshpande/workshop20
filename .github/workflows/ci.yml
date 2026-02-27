@@ -115,10 +115,21 @@ permissions:
 # 13. Optional: Deployment Stage
 # Uncomment once students understand environments + secrets.
 # ------------------------------------------------------------
-#   deploy:
-#     needs: build-test
-#     runs-on: ubuntu-latest
-#     environment: production
-#     steps:
-#       # - name: Deploy (placeholder)
-#       #   run: echo "Deploying application..."
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.ref == 'refs/heads/main'
+    
+    permissions:
+      contents: read
+    
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      
+      - name: Deploy application
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "::add-mask::${{ secrets.DEPLOY_TOKEN }}"
+          echo "Deploying application with secure token..."
