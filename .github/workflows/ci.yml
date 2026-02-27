@@ -66,22 +66,20 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm install
       - run: npm test
-# ------------------------------------------------------------
-# 8. Dependency Scanning (Security)
-# Uncomment to introduce supply‑chain scanning.
-# ------------------------------------------------------------
-#       # - name: Dependency scan
-#       #   run: npm audit --audit-level=moderate
-
-
-# ------------------------------------------------------------
-# 9. Static Analysis (Security)
-# Uncomment if ESLint or similar is added to the project.
-# ------------------------------------------------------------
-#       # - name: Lint code
-#       #   run: npm run lint
-
-
+ 
+      # ----------------------------------------------------
+      # 8. Dependency Scanning (Security)
+      # ----------------------------------------------------
+      - name: Dependency scan
+        run: npm audit --audit-level=moderate
+      
+      # ----------------------------------------------------
+      # 9. Static Analysis (Security)
+      # ----------------------------------------------------
+      - name: Lint code
+        run: npm run lint
+      
+      - run: npm test
 # ------------------------------------------------------------
 # 10. Workflow Hardening
 # Uncomment to apply least‑privilege permissions.
